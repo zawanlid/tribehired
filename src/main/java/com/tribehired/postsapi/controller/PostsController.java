@@ -23,6 +23,11 @@ import com.tribehired.postsapi.model.Comment;
 import com.tribehired.postsapi.model.PostReq;
 import com.tribehired.postsapi.model.PostRes;
 
+/**
+ * 
+ * @author dil.nawaz
+ *
+ */
 @RestController
 public class PostsController {
 
@@ -38,11 +43,19 @@ public class PostsController {
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static Logger log = LoggerFactory.getLogger(PostsController.class);
 
+	/**
+	 * Test connection.
+	 * @return
+	 */
 	@RequestMapping(value = "${api.url.ping}", method = RequestMethod.GET)
 	public String ping() {
 		return "Welcome!";
 	}
 
+	/**
+	 * Get posts from endpoint and sort results as required.
+	 * @return
+	 */
 	@RequestMapping(value = "${api.url.top.posts}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String findTopPosts() {
 
@@ -52,21 +65,26 @@ public class PostsController {
 		String result = "";
 		try {
 
+			// 1. Get posts and comments from endpoints.
 			topPostLst = Arrays.asList(mapper.readValue(client.get(clientUrlPosts), PostReq[].class));
 			cmtLst = Arrays.asList(mapper.readValue(client.get(clientUrlCmts), Comment[].class));
 
+			// 2. Iterate on posts list and update comment total count into post object in the list.
 			for (PostReq post : topPostLst) {
 
 				post.setCommentsCount(
 						cmtLst.stream().filter(e -> e.getPostId() == post.getId()).collect(Collectors.toList()).size());
 			}
 
+			// 3. Sort in descending order based on comments total count.
 			Collections.sort(topPostLst, Collections.reverseOrder());
-			List<PostRes> resultList = topPostLst.stream().map(o -> {
-				PostRes r = new PostRes(o.getId(), o.getTitle(), o.getBody(), o.getCommentsCount());
-				return r;
-			}).collect(Collectors.toList());
+			
+			// 4. Copy to result model class to achieve required standard JSON output
+			List<PostRes> resultList = topPostLst.stream().map(o -> 
+				 new PostRes(o.getId(), o.getTitle(), o.getBody(), o.getCommentsCount())
+			).collect(Collectors.toList());
 
+			// 5. Convert list to JSON string.
 			result = mapper.writeValueAsString(resultList);
 
 		} catch (Exception e) {
@@ -76,6 +94,15 @@ public class PostsController {
 		return result;
 	}
 
+	/**
+	 * Get comments from the endpoint.
+	 * @param postId
+	 * @param id
+	 * @param name
+	 * @param email
+	 * @param body
+	 * @return
+	 */
 	@RequestMapping(value = "${api.url.posts.filter.comments}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String findComments(@RequestParam(name = "postId", required = false) Integer postId,
 			@RequestParam(name = "id", required = false) Integer id,
@@ -89,6 +116,7 @@ public class PostsController {
 		String result = "";
 		try {
 
+			// 1. Initialize the predicate to be used for filtering data from the comments list.
 			List<Predicate<Comment>> pList = new ArrayList<Predicate<Comment>>();
 			pList.add((x) -> postId != null && x.getPostId() == postId);
 			pList.add((x) -> id != null && x.getId() == id);
@@ -96,14 +124,16 @@ public class PostsController {
 			pList.add((x) -> email != null && x.getEmail().equals(email));
 			pList.add((x) -> body != null && x.getBody().contains(body));
 
+			// 2. Get comments list from the endpoint.
 			cmtLst = Arrays.asList(mapper.readValue(client.get(clientUrlCmts), Comment[].class));
 
+			// 3. Apply all the predicate and copy filtered objects to the result list. (Data Filtering)
 			for (Predicate<Comment> predicate : pList) {
-				log.info("Predicate ...");
 				filterComments(cmtLst, predicate)
 					.forEach(e -> resultLst.add(e));				
 			}
 
+			// 4. Convert list to JSON String.
 			result = mapper.writeValueAsString(resultLst);
 
 		} catch (Exception e) {
@@ -113,6 +143,12 @@ public class PostsController {
 		return result;
 	}
 
+	/**
+	 * Filter comments using defined predicates.
+	 * @param comment
+	 * @param predicate
+	 * @return
+	 */
 	private List<Comment> filterComments(List<Comment> comment, Predicate<Comment> predicate) {
 		return comment.stream().filter(predicate).collect(Collectors.toList());
 	}

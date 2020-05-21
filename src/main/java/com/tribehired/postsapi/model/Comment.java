@@ -1,5 +1,10 @@
 package com.tribehired.postsapi.model;
 
+/**
+ * 
+ * @author dil.nawaz
+ *
+ */
 public class Comment {
 
 	private int postId;

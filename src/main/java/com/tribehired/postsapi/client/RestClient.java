@@ -9,6 +9,12 @@ import java.net.URL;
 
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Rest client.
+ * 
+ * @author dil.nawaz
+ *
+ */
 @Configuration
 public class RestClient {
 
@@ -34,8 +40,6 @@ public class RestClient {
 			while ((line = br.readLine()) != null) {
 				json +=line;
 			}
-
-
 
 		} catch (MalformedURLException e) {
 

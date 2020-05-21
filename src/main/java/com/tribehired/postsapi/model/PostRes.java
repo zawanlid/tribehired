@@ -3,6 +3,11 @@ package com.tribehired.postsapi.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+/**
+ * 
+ * @author dil.nawaz
+ *
+ */
 @JsonPropertyOrder({ "post_id", "post_title", "post_body", "total_number_of_comments" })
 public class PostRes {
 

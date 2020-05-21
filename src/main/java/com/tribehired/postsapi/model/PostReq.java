@@ -1,5 +1,10 @@
 package com.tribehired.postsapi.model;
 
+/**
+ * 
+ * @author dil.nawaz
+ *
+ */
 public class PostReq implements Comparable<PostReq>{
 
 	private int userId;
