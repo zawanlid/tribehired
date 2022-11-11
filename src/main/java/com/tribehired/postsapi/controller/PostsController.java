@@ -95,6 +95,7 @@ public class PostsController {
 	}
 
 	public static void main(String[] args) {
+
 		// modify lines added in 1.0 and 2.0 -> r2.0	Added main method in Controller .
 
 		// new line modify lines added in 1.0 and 2.0
@@ -105,8 +106,16 @@ public class PostsController {
 		String str = "Name";
 		System.out.println(str);
 
+
+		// change in connect-globalmaster. r2.0	Added main method in Controller
+		String s;
+		int abc;
+
 	}
 
+	private void dosomething(){
+
+	};
 	/**
 	 * Get comments from the endpoint.
 	 * @param postId
