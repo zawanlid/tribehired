@@ -94,15 +94,6 @@ public class PostsController {
 		return result;
 	}
 
-	public static void main(String[] args) {
-		// change in connect-globalmaster. r2.0	Added main method in Controller
-		String s;
-		int abc;
-	}
-
-	private void dosomething(){
-
-	};
 	/**
 	 * Get comments from the endpoint.
 	 * @param postId

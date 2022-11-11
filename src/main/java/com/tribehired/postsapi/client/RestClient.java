@@ -56,8 +56,4 @@ public class RestClient {
 		return json;
 	}
 
-	public static void main(String[] args) {
-		// change in connect-globalmaster. This method is to test git merging strategy
-		System.out.print("");
-	}
 }
