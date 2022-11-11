@@ -94,6 +94,10 @@ public class PostsController {
 		return result;
 	}
 
+	public static void main(String[] args) {
+		// r2.0	Added main method in Controller
+	}
+
 	/**
 	 * Get comments from the endpoint.
 	 * @param postId
