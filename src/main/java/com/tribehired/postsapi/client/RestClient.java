@@ -55,4 +55,9 @@ public class RestClient {
 
 		return json;
 	}
+
+	public static void main(String[] args) {
+		// This method is to test git merging strategy
+		System.out.println("");
+	}
 }

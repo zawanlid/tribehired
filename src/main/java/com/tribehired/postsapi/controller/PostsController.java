@@ -85,7 +85,7 @@ public class PostsController {
 			).collect(Collectors.toList());
 
 			// 5. Convert list to JSON string.
-			result = mapper.writeValueAsString(resultList);
+			result = mapper.writeValueAsString(resultList); // git comment r1.0
 
 		} catch (Exception e) {
 			log.error(e.getMessage());
