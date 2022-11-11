@@ -95,7 +95,16 @@ public class PostsController {
 	}
 
 	public static void main(String[] args) {
-		// r2.0	Added main method in Controller
+		// modify lines added in 1.0 and 2.0 -> r2.0	Added main method in Controller .
+
+		// new line modify lines added in 1.0 and 2.0
+	}
+
+	private void dosome(){
+		//modify lines added in 1.0 and 2.0
+		String str = "Name";
+		System.out.println(str);
+
 	}
 
 	/**
