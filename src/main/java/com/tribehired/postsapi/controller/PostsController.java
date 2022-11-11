@@ -95,7 +95,8 @@ public class PostsController {
 	}
 
 	public static void main(String[] args) {
-		// r2.0	Added main method in Controller
+		// change in connect-globalmaster. r2.0	Added main method in Controller
+		String s;
 	}
 
 	/**
